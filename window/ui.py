@@ -1,5 +1,6 @@
 import pygame
 from window.settings import *
+# OPTIONAL: add a +1 display when a point is scored
 
 
 def draw_text(surface, text, pos, color, font=FONTS["medium"], pos_mode="top_left",

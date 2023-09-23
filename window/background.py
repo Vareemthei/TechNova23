@@ -6,8 +6,11 @@ from window.settings import *
 
 class Background:
     def __init__(self):
-        self.image = image.load("Assets/background.jpg", size=(SCREEN_WIDTH, SCREEN_HEIGHT),
-                                convert="default")
+        self.image = image.load(
+            BACKGROUND_IMAGE,
+            size=(SCREEN_WIDTH, SCREEN_HEIGHT),
+            convert="default"
+        )
 
     def draw(self, surface):
         image.draw(surface, self.image, (SCREEN_WIDTH//2,
