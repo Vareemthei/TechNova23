@@ -1,8 +1,9 @@
 import pygame
+
 import sys
-from settings import *
-from background import Background
-import ui
+from window.settings import *
+from window.background import Background
+import window.ui as ui
 
 
 class Menu:
@@ -11,13 +12,11 @@ class Menu:
         self.background = Background()
         self.click_sound = pygame.mixer.Sound(f"Assets/Sounds/slap.wav")
 
-
     def draw(self):
         self.background.draw(self.surface)
         # draw title
         ui.draw_text(self.surface, GAME_TITLE, (SCREEN_WIDTH//2, 120), COLORS["title"], font=FONTS["big"],
-                    shadow=True, shadow_color=(255,255,255), pos_mode="center")
-
+                     shadow=True, shadow_color=(255, 255, 255), pos_mode="center")
 
     def update(self):
         self.draw()
