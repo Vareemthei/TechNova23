@@ -1,7 +1,7 @@
 import pygame
 import image
 from settings import *
-from hand_tracking import HandTracking
+from pose_tracking import HandTracking
 import cv2
 
 class Hand:
