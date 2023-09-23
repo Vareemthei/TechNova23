@@ -17,13 +17,13 @@ class Game:
 
         # Load camera
         self.cap = cv2.VideoCapture(0)
+        self.camera_loaded = False
 
         # Start Pose Tracking
 
     # LOADING
     def reset(self):  # reset all the needed variables
         # MOVEMENT TRACKING
-        self.pose = PoseTracking()
 
         # GAME DATA
         self.score = 0
@@ -31,9 +31,13 @@ class Game:
 
     def load_camera(self):
         _, self.frame = self.cap.read()
+        self.camera_loaded = True
+        
 
     # UPDATE GAME DATA
     def update_score(self):
+        if self.pose.is_bicep_curled():
+            self.score += 1
         pass
 
     def game_time_update(self):
@@ -67,10 +71,14 @@ class Game:
                      shadow=True, shadow_color=(255, 255, 255))
 
     def update(self):
-        self.load_camera()
         self.game_time_update()
-
         self.draw()
+        if self.camera_loaded == False:
+            self.load_camera();
+            self.pose = PoseTracking()
+            self.pose.scan_pose()
+
+
 
         if self.time_left > 0:
             # TODO: write the main game loop

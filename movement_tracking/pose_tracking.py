@@ -34,54 +34,55 @@ class PoseTracking:
         self.counter = 0
         self.stage = None
 
-    def scan_pose(self, image):
-        rows, cols, _ = image.shape
+    def scan_pose(self):
+        cap = cv2.VideoCapture(0) 
+        while cap.isOpened():
+            ret, frame = cap.read() # DON'T DELETE RET!
+            # To improve performance, optionally mark the image as not writeable to
+            # pass by reference.
+            image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # converts to RGB
+            image.flags.writeable = False
 
-        # To improve performance, optionally mark the image as not writeable to
-        # pass by reference.
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # converts to RGB
-        image.flags.writeable = False
+            self.results = self.pose_tracking.process(image)
 
-        self.results = self.pose_tracking.process(image)
+            # Recolor back to BGR
+            image.flags.writeable = True
+            image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-        # Recolor back to BGR
-        image.flags.writeable = True
-        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+            # Extract landmarks try and catch incase cant exteact landmarks
+            try:
+                landmarks = self.results.pose_landmarks.landmark  # extracts landmarks
 
-        # Extract landmarks try and catch incase cant exteact landmarks
-        try:
-            landmarks = self.results.pose_landmarks.landmark  # extracts landmarks
+                # Get coordinates
+                self.shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+                                landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]  # gets shoulder coordinates
+                self.elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
+                            landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]  # gets elbow coordinates
+                self.wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,
+                            landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]  # gets wrist coordinates
 
-            # Get coordinates
-            self.shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
-                             landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]  # gets shoulder coordinates
-            self.elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
-                          landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]  # gets elbow coordinates
-            self.wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,
-                          landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]  # gets wrist coordinates
+                # Calculate angle
+                self.angle = calculate_angle(
+                    self.shoulder, self.elbow, self.wrist)  # calculates angle
 
-            # Calculate angle
-            self.angle = calculate_angle(
-                self.shoulder, self.elbow, self.wrist)  # calculates angle
+                # Visualize angle
+                cv2.putText(image, str(self.angle),
+                            # puts angle on screen
+                            tuple(np.multiply(self.elbow, [640, 480]).astype(int)),
+                            # text color and size
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,
+                                                            255, 255), 2, cv2.LINE_AA
+                            )
 
-            # Visualize angle
-            cv2.putText(image, str(self.angle),
-                        # puts angle on screen
-                        tuple(np.multiply(self.elbow, [640, 480]).astype(int)),
-                        # text color and size
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,
-                                                        255, 255), 2, cv2.LINE_AA
-                        )
-
-            # Curl counter logic
-            if self.angle > 160:
-                self.stage = "down"
-            if self.angle < 30 and self.stage == 'down':
-                self.stage = "up"
-                self.counter += 1
-                print(self.counter)
-        except:
-            pass
+                # Curl counter logic
+                if self.angle > 160:
+                    self.stage = "down"
+                if self.angle < 30 and self.stage == 'down':
+                    self.stage = "up"
+                    self.counter += 1
+                    print(self.counter)
+            except:
+                pass
 
         return image
 
