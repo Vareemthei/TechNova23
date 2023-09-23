@@ -3,8 +3,8 @@ import pygame
 import sys
 import os
 from window.settings import *
-from game import Game
-from menu import Menu
+from window.game import Game
+from window.menu import Menu
 
 
 # Setup pygame/window --------------------------------------------- #
@@ -13,15 +13,17 @@ pygame.init()
 pygame.display.set_caption(WINDOW_NAME)
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
-mainClock = pygame.time.Clock()
+mainClock = pygame.time.Clock()  # used to limit the fps
 
 # Fonts ----------------------------------------------------------- #
 fps_font = pygame.font.SysFont("coopbl", 22)
 
 # Music ----------------------------------------------------------- #
-pygame.mixer.music.load("Assets/Sounds/Komiku_-_12_-_Bicycle.mp3")
-pygame.mixer.music.set_volume(MUSIC_VOLUME)
-pygame.mixer.music.play(-1)
+# OPTIONAL: play music
+# pygame.mixer.music.load("Assets/Sounds/Komiku_-_12_-_Bicycle.mp3")
+# pygame.mixer.music.set_volume(MUSIC_VOLUME)
+# pygame.mixer.music.play(-1)
+
 # Variables ------------------------------------------------------- #
 state = "menu"
 
