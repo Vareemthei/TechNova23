@@ -5,15 +5,20 @@ GAME_TITLE = WINDOW_NAME
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 1200, 700
 
+# FPS
 FPS = 90
 DRAW_FPS = True
 
-# sizes
-BUTTONS_SIZES = (240, 90)
-CHARACTER_SIZE = (150, 150)
+# FRAME DISPLAY
+FRAME_DISPLAY = False
 
-# drawing
-DRAW_HITBOX = False  # will draw all the hitbox
+# sizes
+# TODO: modify the sizes
+START_BUTTON_SIZE = (240, 90)
+QUIT_BUTTON_SIZE = (240, 90)
+BUTTONS_SIZES = (240, 90)
+
+CHARACTER_SIZE = (100, 160)
 
 # animation
 ANIMATION_SPEED = 0.08  # the frame of the insects will change every X sec
@@ -24,14 +29,14 @@ LEVEL_DURATION = 30  # in seconds
 
 # colors
 COLORS = {
-    "title": (38, 61, 39),
-    "score": (38, 61, 39),
-    "timer": (38, 61, 39),
+    "title": (255, 240, 240),
+    "score": (255, 240, 240),
+    "timer": (255, 240, 240),
     "buttons": {
-        "default": (56, 67, 209),
-        "second":  (87, 99, 255),
-        "text": (255, 255, 255),
-        "shadow": (46, 54, 163)
+        "default": (185, 118, 245),
+        "second":  (210, 162, 244),
+        "text": (255, 240, 240),
+        "shadow": (127, 81, 168)
     }
 }  # second is the color when the mouse is on the button
 
@@ -43,10 +48,18 @@ CLICK_SOUND = None
 
 # fonts
 pygame.font.init()
+DEFAULT_FONT_PATH = "assets/fonts/ARCADECLASSIC.ttf"
+
 FONTS = {}
-FONTS["small"] = pygame.font.Font(None, 40)
-FONTS["medium"] = pygame.font.Font(None, 72)
-FONTS["big"] = pygame.font.Font(None, 120)
+FONTS["small"] = pygame.font.Font(DEFAULT_FONT_PATH, 40)
+FONTS["medium"] = pygame.font.Font(DEFAULT_FONT_PATH, 72)
+FONTS["big"] = pygame.font.Font(DEFAULT_FONT_PATH, 120)
 
 # images
+GEM_IMAGE = "assets/images/gem.png"
+
 BACKGROUND_IMAGE = "assets/images/background.png"
+
+# buttons images
+# START_BUTTON_IMAGE = "assets/images/buttons/start.png"
+# QUIT_BUTTON_IMAGE = "assets/images/buttons/quit.png"

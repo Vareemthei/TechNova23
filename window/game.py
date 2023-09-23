@@ -80,5 +80,6 @@ class Game:
             if ui.button(self.surface, 540, "Continue"):
                 return "menu"
 
-        # cv2.imshow("Frame", self.frame)
+        if FRAME_DISPLAY:
+            cv2.imshow("Frame", self.frame)
         cv2.waitKey(1)

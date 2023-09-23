@@ -1,5 +1,7 @@
 import pygame
 from window.settings import *
+
+from utils import image as img
 # OPTIONAL: add a +1 display when a point is scored
 
 
@@ -20,6 +22,27 @@ def draw_text(surface, text, pos, color, font=FONTS["medium"], pos_mode="top_lef
     surface.blit(label, label_rect)  # draw the text
 
 
+# def button2(surface, pos_y, image, click_sound=None):
+#     image = img.load(image)
+#     rect = image.get_rect()
+
+#     # Position the button in the center (horizontally)
+#     rect.x = SCREEN_WIDTH//2 - rect.w//2
+#     rect.y = pos_y
+
+#     on_button = False
+
+#     if rect.collidepoint(pygame.mouse.get_pos()):
+#         on_button = True
+
+#     if on_button and pygame.mouse.get_pressed()[0]:
+#         if click_sound is not None:
+#             click_sound.play()
+#         return True
+
+
+# TODO: test and add the quit button
+
 def button(surface, pos_y, text=None, click_sound=None):
     rect = pygame.Rect(
         (SCREEN_WIDTH//2 - BUTTONS_SIZES[0]//2, pos_y), BUTTONS_SIZES)
@@ -33,8 +56,17 @@ def button(surface, pos_y, text=None, click_sound=None):
 
     # draw the shadow rectangle
     pygame.draw.rect(
-        surface, COLORS["buttons"]["shadow"], (rect.x - 6, rect.y - 6, rect.w, rect.h))
-    pygame.draw.rect(surface, color, rect)  # draw the rectangle
+        surface,
+        COLORS["buttons"]["shadow"],
+        (rect.x - 6, rect.y - 6, rect.w, rect.h),
+        border_radius=10
+    )
+    pygame.draw.rect(
+        surface,
+        color,
+        rect,
+        border_radius=10
+    )  # draw the rectangle
     # draw the text
     if text is not None:
         draw_text(surface, text, rect.center, COLORS["buttons"]["text"], pos_mode="center",
