@@ -13,7 +13,7 @@ DRAW_FPS = True
 FRAME_DISPLAY = False
 
 # sizes
-BUTTONS_SIZE = (600, 90)
+BUTTONS_SIZE = (400, 90)
 
 CHARACTER_SIZE = (300, 480)
 
@@ -25,9 +25,11 @@ LEVEL_DURATION = 60  # in seconds
 
 # colors
 COLORS = {
+    "title": (255, 240, 240),
     "score": (255, 240, 240),
     "timer": (255, 240, 240),
     "timer_warning": (160, 40, 0),
+    "shadow": (127, 81, 168),
     "buttons": {
         "default": (185, 118, 245),
         "second":  (210, 162, 244),
@@ -58,7 +60,3 @@ BACKGROUND_IMAGE = [
     "assets/images/background.png",
     "assets/images/background2.png",
 ]
-
-# buttons images
-# START_BUTTON_IMAGE = "assets/images/buttons/start.png"
-# QUIT_BUTTON_IMAGE = "assets/images/buttons/quit.png"

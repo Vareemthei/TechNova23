@@ -22,25 +22,6 @@ def draw_text(surface, text, pos, color, font=FONTS["medium"], pos_mode="top_lef
     surface.blit(label, label_rect)  # draw the text
 
 
-# def button2(surface, pos_y, image, click_sound=None):
-#     image = img.load(image)
-#     rect = image.get_rect()
-
-#     # Position the button in the center (horizontally)
-#     rect.x = SCREEN_WIDTH//2 - rect.w//2
-#     rect.y = pos_y
-
-#     on_button = False
-
-#     if rect.collidepoint(pygame.mouse.get_pos()):
-#         on_button = True
-
-#     if on_button and pygame.mouse.get_pressed()[0]:
-#         if click_sound is not None:
-#             click_sound.play()
-#         return True
-
-
 def button(surface, pos_y, text=None, click_sound=None):
     rect = pygame.Rect(
         (SCREEN_WIDTH//2 - BUTTONS_SIZE[0]//2, pos_y), BUTTONS_SIZE)
