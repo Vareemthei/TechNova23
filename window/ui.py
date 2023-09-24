@@ -1,9 +1,6 @@
 import pygame
 from window.settings import *
 
-from utils import image as img
-# OPTIONAL: add a +1 display when a point is scored
-
 
 def draw_text(surface, text, pos, color, font=FONTS["medium"], pos_mode="top_left",
               shadow=False, shadow_color=(0, 0, 0), shadow_offset=2):
@@ -22,23 +19,29 @@ def draw_text(surface, text, pos, color, font=FONTS["medium"], pos_mode="top_lef
     surface.blit(label, label_rect)  # draw the text
 
 
-# def button2(surface, pos_y, image, click_sound=None):
-#     image = img.load(image)
-#     rect = image.get_rect()
+def fake_button(surface, pos, text=None, width=BUTTONS_SIZE[0], height=BUTTONS_SIZE[1]):
+    pos_x, pos_y = pos
 
-#     # Position the button in the center (horizontally)
-#     rect.x = SCREEN_WIDTH//2 - rect.w//2
-#     rect.y = pos_y
+    rect = pygame.Rect(
+        (pos_x - width//2, pos_y), (width, height))
 
-#     on_button = False
-
-#     if rect.collidepoint(pygame.mouse.get_pos()):
-#         on_button = True
-
-#     if on_button and pygame.mouse.get_pressed()[0]:
-#         if click_sound is not None:
-#             click_sound.play()
-#         return True
+    # draw the shadow rectangle
+    pygame.draw.rect(
+        surface,
+        COLORS["buttons"]["shadow"],
+        (rect.x - 6, rect.y - 6, rect.w, rect.h),
+        border_radius=10
+    )
+    pygame.draw.rect(
+        surface,
+        COLORS["buttons"]["default"],
+        rect,
+        border_radius=10
+    )  # draw the rectangle
+    # draw the text
+    if text is not None:
+        draw_text(surface, text, rect.center, COLORS["buttons"]["text"], pos_mode="center", font=FONTS["small"],
+                  shadow=True, shadow_color=COLORS["buttons"]["shadow"])
 
 
 def button(surface, pos_y, text=None, click_sound=None):

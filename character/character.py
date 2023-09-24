@@ -7,7 +7,7 @@ from utils import image
 class Character:
     def __init__(self):
         self.images = [image.load(
-            f"assets/character/byte{nb}.png", size=CHARACTER_SIZE) for nb in range(1, 5)]
+            f"assets/images/character/byte{nb}.png", size=CHARACTER_SIZE) for nb in range(1, 5)]
         self.current_frame = 0
         self.animation_timer = 0
 

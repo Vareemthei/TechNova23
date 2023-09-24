@@ -1,18 +1,16 @@
 import pygame
 
-WINDOW_NAME = "Placeholder"
+WINDOW_NAME = "SWEAT WITH BYTE"
 GAME_TITLE = WINDOW_NAME
 
-SCREEN_WIDTH, SCREEN_HEIGHT = 1200, 700
-
-# FPS
-FPS = 90
-DRAW_FPS = True
 
 # FRAME DISPLAY
 FRAME_DISPLAY = False
 
 # sizes
+SCREEN_WIDTH, SCREEN_HEIGHT = 1200, 700
+
+
 BUTTONS_SIZE = (400, 90)
 
 CHARACTER_SIZE = (300, 480)
@@ -29,6 +27,8 @@ COLORS = {
     "score": (255, 240, 240),
     "timer": (255, 240, 240),
     "timer_warning": (160, 40, 0),
+    "shadow": (127, 81, 168),
+    "dark_text": (0, 0, 0),
     "buttons": {
         "default": (185, 118, 245),
         "second":  (210, 162, 244),
@@ -45,7 +45,7 @@ CLICK_SOUND = None
 
 # fonts
 pygame.font.init()
-DEFAULT_FONT_PATH = "assets/fonts/ARCADECLASSIC.ttf"
+DEFAULT_FONT_PATH = "assets/fonts/NeuePixelSans.ttf"
 
 FONTS = {}
 FONTS["small"] = pygame.font.Font(DEFAULT_FONT_PATH, 40)
@@ -53,10 +53,9 @@ FONTS["medium"] = pygame.font.Font(DEFAULT_FONT_PATH, 72)
 FONTS["big"] = pygame.font.Font(DEFAULT_FONT_PATH, 120)
 
 # images
-GEM_IMAGE = "assets/images/gem.png"
+GEM_IMAGE = "assets/images/move_point_gem.png"
 
-BACKGROUND_IMAGE = "assets/images/background.png"
-
-# buttons images
-# START_BUTTON_IMAGE = "assets/images/buttons/start.png"
-# QUIT_BUTTON_IMAGE = "assets/images/buttons/quit.png"
+BACKGROUND_IMAGE = [
+    "assets/images/background.png",
+    "assets/images/background2.png",
+]

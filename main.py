@@ -13,12 +13,9 @@ pygame.init()
 pygame.display.set_caption(WINDOW_NAME)
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
-mainClock = pygame.time.Clock()  # used to limit the fps
-
 
 # Music ----------------------------------------------------------- #
-# OPTIONAL: play music
-# pygame.mixer.music.load("Assets/Sounds/Komiku_-_12_-_Bicycle.mp3")
+# pygame.mixer.music.load(MUSIC_FILE)
 # pygame.mixer.music.set_volume(MUSIC_VOLUME)
 # pygame.mixer.music.play(-1)
 
@@ -33,6 +30,7 @@ menu = Menu(SCREEN)
 # Functions ------------------------------------------------------ #
 def user_events():
     for event in pygame.event.get():
+        # EXIT
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
@@ -53,7 +51,6 @@ def update():
         if game.update() == "menu":
             state = "menu"
     pygame.display.update()
-    mainClock.tick(FPS)
 
 
 # Loop ------------------------------------------------------------ #
