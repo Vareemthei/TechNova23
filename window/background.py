@@ -5,9 +5,9 @@ from window.settings import *
 
 
 class Background:
-    def __init__(self):
+    def __init__(self, ID=0):
         self.image = image.load(
-            BACKGROUND_IMAGE,
+            BACKGROUND_IMAGE[ID],
             size=(SCREEN_WIDTH, SCREEN_HEIGHT),
             convert="default"
         )

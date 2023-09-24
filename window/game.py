@@ -14,7 +14,7 @@ from character.character import Character
 class Game:
     def __init__(self, surface):
         self.surface = surface
-        self.background = Background()
+        self.background = Background(0)
         self.character = Character()
 
         # Load camera

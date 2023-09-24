@@ -1,6 +1,6 @@
 import pygame
 
-WINDOW_NAME = "Placeholder"
+WINDOW_NAME = "PLACEHOLDER"
 GAME_TITLE = WINDOW_NAME
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 1200, 700
@@ -13,7 +13,7 @@ DRAW_FPS = True
 FRAME_DISPLAY = False
 
 # sizes
-BUTTONS_SIZE = (400, 90)
+BUTTONS_SIZE = (600, 90)
 
 CHARACTER_SIZE = (300, 480)
 
@@ -25,7 +25,6 @@ LEVEL_DURATION = 60  # in seconds
 
 # colors
 COLORS = {
-    "title": (255, 240, 240),
     "score": (255, 240, 240),
     "timer": (255, 240, 240),
     "timer_warning": (160, 40, 0),
@@ -45,7 +44,7 @@ CLICK_SOUND = None
 
 # fonts
 pygame.font.init()
-DEFAULT_FONT_PATH = "assets/fonts/ARCADECLASSIC.ttf"
+DEFAULT_FONT_PATH = "assets/fonts/NeuePixelSans.ttf"
 
 FONTS = {}
 FONTS["small"] = pygame.font.Font(DEFAULT_FONT_PATH, 40)
@@ -55,7 +54,10 @@ FONTS["big"] = pygame.font.Font(DEFAULT_FONT_PATH, 120)
 # images
 GEM_IMAGE = "assets/images/gem.png"
 
-BACKGROUND_IMAGE = "assets/images/background.png"
+BACKGROUND_IMAGE = [
+    "assets/images/background.png",
+    "assets/images/background2.png",
+]
 
 # buttons images
 # START_BUTTON_IMAGE = "assets/images/buttons/start.png"
