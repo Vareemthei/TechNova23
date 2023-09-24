@@ -33,67 +33,82 @@ class PoseTracking:
         self.angle = 0
         self.counter = 0
         self.stage = None
+        self.disable_pose = False
 
-    def scan_pose(self, image):
-        rows, cols, _ = image.shape
+    def scan_pose(self):
+        cap = cv2.VideoCapture(0)
+        image = None
 
-        # To improve performance, optionally mark the image as not writeable to
-        # pass by reference.
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # converts to RGB
-        image.flags.writeable = False
+        print("Scanning pose...")
 
-        self.results = self.pose_tracking.process(image)
+        while True:
+            if self.disable_pose:
 
-        # Recolor back to BGR
-        image.flags.writeable = True
-        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+                print("Pose scanning disabled")
+                break
 
-        # Extract landmarks try and catch incase cant exteact landmarks
-        try:
-            landmarks = self.results.pose_landmarks.landmark  # extracts landmarks
+            ret, frame = cap.read()  # DON'T DELETE RET!
+            # To improve performance, optionally mark the image as not writeable to
+            # pass by reference.
+            image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # converts to RGB
+            image.flags.writeable = False
 
-            # Get coordinates
-            self.shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
-                             landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]  # gets shoulder coordinates
-            self.elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
-                          landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]  # gets elbow coordinates
-            self.wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,
-                          landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]  # gets wrist coordinates
+            self.results = self.pose_tracking.process(image)
 
-            # Calculate angle
-            self.angle = calculate_angle(
-                self.shoulder, self.elbow, self.wrist)  # calculates angle
+            # Recolor back to BGR
+            image.flags.writeable = True
+            image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-            # Visualize angle
-            cv2.putText(image, str(self.angle),
-                        # puts angle on screen
-                        tuple(np.multiply(self.elbow, [640, 480]).astype(int)),
-                        # text color and size
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,
-                                                        255, 255), 2, cv2.LINE_AA
-                        )
+            # Extract landmarks try and catch incase cant exteact landmarks
+            try:
+                landmarks = self.results.pose_landmarks.landmark  # extracts landmarks
 
-            # Curl counter logic
-            if self.angle > 160:
-                self.stage = "down"
-            if self.angle < 30 and self.stage == 'down':
-                self.stage = "up"
-                self.counter += 1
-                print(self.counter)
-        except:
-            pass
+                # Get coordinates
+                self.shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+                                 landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]  # gets shoulder coordinates
+                self.elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
+                              landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]  # gets elbow coordinates
+                self.wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,
+                              landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]  # gets wrist coordinates
+
+                # Calculate angle
+                self.angle = calculate_angle(
+                    self.shoulder, self.elbow, self.wrist)  # calculates angle
+
+                # Visualize angle
+                cv2.putText(image, str(self.angle),
+                            # puts angle on screen
+                            tuple(np.multiply(self.elbow, [
+                                  640, 480]).astype(int)),
+                            # text color and size
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,
+                                                            255, 255), 2, cv2.LINE_AA
+                            )
+
+                # Curl counter logic
+                if self.angle > 160:
+                    self.stage = "down"
+                if self.angle < 30 and self.stage == 'down':
+                    self.stage = "up"
+                    self.counter += 1
+                    print(self.counter)
+            except:
+                pass
 
         return image
 
     def get_counter(self):
-        return (self.counter)
+        return self.counter
+
+    def set_disable_pose(self, disable_pose):
+        self.disable_pose = disable_pose
 
     def display_pose(self):
         cv2.imshow("image", self.image)
         cv2.waitKey(1)
 
-    def is_bicep_curled(self):
-        pass
+    # def is_bicep_curled(self):
+    #     pass
 
 
 # VIDEO FEED

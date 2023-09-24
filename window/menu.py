@@ -23,6 +23,6 @@ class Menu:
         if ui.button(self.surface, 320, "START", click_sound=self.click_sound):
             return "game"
 
-        if ui.button(self.surface, 320+BUTTONS_SIZES[1]*1.5, "Quit", click_sound=self.click_sound):
+        if ui.button(self.surface, 320+BUTTONS_SIZE[1]*1.5, "Quit", click_sound=self.click_sound):
             pygame.quit()
             sys.exit()

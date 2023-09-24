@@ -15,8 +15,6 @@ SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
 mainClock = pygame.time.Clock()  # used to limit the fps
 
-# Fonts ----------------------------------------------------------- #
-fps_font = pygame.font.SysFont("coopbl", 22)
 
 # Music ----------------------------------------------------------- #
 # OPTIONAL: play music
@@ -66,9 +64,3 @@ while True:
 
     # Update ------------------------------------------------------ #
     update()
-
-    # FPS
-    if DRAW_FPS:
-        fps_label = fps_font.render(
-            f"FPS: {int(mainClock.get_fps())}", 1, (255, 200, 20))
-        SCREEN.blit(fps_label, (5, 5))
