@@ -33,11 +33,21 @@ class PoseTracking:
         self.angle = 0
         self.counter = 0
         self.stage = None
+        self.disable_pose = False
 
     def scan_pose(self):
-        cap = cv2.VideoCapture(0) 
-        while cap.isOpened():
-            ret, frame = cap.read() # DON'T DELETE RET!
+        cap = cv2.VideoCapture(0)
+        image = None
+
+        print("Scanning pose...")
+
+        while True:
+            if self.disable_pose:
+
+                print("Pose scanning disabled")
+                break
+
+            ret, frame = cap.read()  # DON'T DELETE RET!
             # To improve performance, optionally mark the image as not writeable to
             # pass by reference.
             image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # converts to RGB
@@ -55,11 +65,11 @@ class PoseTracking:
 
                 # Get coordinates
                 self.shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
-                                landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]  # gets shoulder coordinates
+                                 landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]  # gets shoulder coordinates
                 self.elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
-                            landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]  # gets elbow coordinates
+                              landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]  # gets elbow coordinates
                 self.wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,
-                            landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]  # gets wrist coordinates
+                              landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]  # gets wrist coordinates
 
                 # Calculate angle
                 self.angle = calculate_angle(
@@ -68,7 +78,8 @@ class PoseTracking:
                 # Visualize angle
                 cv2.putText(image, str(self.angle),
                             # puts angle on screen
-                            tuple(np.multiply(self.elbow, [640, 480]).astype(int)),
+                            tuple(np.multiply(self.elbow, [
+                                  640, 480]).astype(int)),
                             # text color and size
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,
                                                             255, 255), 2, cv2.LINE_AA
@@ -87,14 +98,17 @@ class PoseTracking:
         return image
 
     def get_counter(self):
-        return (self.counter)
+        return self.counter
+
+    def set_disable_pose(self, disable_pose):
+        self.disable_pose = disable_pose
 
     def display_pose(self):
         cv2.imshow("image", self.image)
         cv2.waitKey(1)
 
-    def is_bicep_curled(self):
-        pass
+    # def is_bicep_curled(self):
+    #     pass
 
 
 # VIDEO FEED

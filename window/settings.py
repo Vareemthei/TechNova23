@@ -13,25 +13,22 @@ DRAW_FPS = True
 FRAME_DISPLAY = False
 
 # sizes
-# TODO: modify the sizes
-START_BUTTON_SIZE = (240, 90)
-QUIT_BUTTON_SIZE = (240, 90)
-BUTTONS_SIZES = (240, 90)
+BUTTONS_SIZE = (400, 90)
 
-CHARACTER_SIZE = (100, 160)
+CHARACTER_SIZE = (300, 480)
 
 # animation
-ANIMATION_SPEED = 0.08  # the frame of the insects will change every X sec
+ANIMATION_SPEED = 0.8  # seconds per frame
 
 # difficulty
-# TODO: add difficulty?
-LEVEL_DURATION = 30  # in seconds
+LEVEL_DURATION = 60  # in seconds
 
 # colors
 COLORS = {
     "title": (255, 240, 240),
     "score": (255, 240, 240),
     "timer": (255, 240, 240),
+    "timer_warning": (160, 40, 0),
     "buttons": {
         "default": (185, 118, 245),
         "second":  (210, 162, 244),

@@ -41,11 +41,9 @@ def draw_text(surface, text, pos, color, font=FONTS["medium"], pos_mode="top_lef
 #         return True
 
 
-# TODO: test and add the quit button
-
 def button(surface, pos_y, text=None, click_sound=None):
     rect = pygame.Rect(
-        (SCREEN_WIDTH//2 - BUTTONS_SIZES[0]//2, pos_y), BUTTONS_SIZES)
+        (SCREEN_WIDTH//2 - BUTTONS_SIZE[0]//2, pos_y), BUTTONS_SIZE)
 
     on_button = False
     if rect.collidepoint(pygame.mouse.get_pos()):
