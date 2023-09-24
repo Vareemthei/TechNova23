@@ -1,5 +1,3 @@
-import pygame
-
 import utils.image as image
 from window.settings import *
 

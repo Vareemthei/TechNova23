@@ -1,9 +1,6 @@
 import pygame
 from window.settings import *
 
-from utils import image as img
-# OPTIONAL: add a +1 display when a point is scored
-
 
 def draw_text(surface, text, pos, color, font=FONTS["medium"], pos_mode="top_left",
               shadow=False, shadow_color=(0, 0, 0), shadow_offset=2):
@@ -20,6 +17,31 @@ def draw_text(surface, text, pos, color, font=FONTS["medium"], pos_mode="top_lef
                      label_rect.y + shadow_offset))
 
     surface.blit(label, label_rect)  # draw the text
+
+
+def fake_button(surface, pos, text=None, width=BUTTONS_SIZE[0], height=BUTTONS_SIZE[1]):
+    pos_x, pos_y = pos
+
+    rect = pygame.Rect(
+        (pos_x - width//2, pos_y), (width, height))
+
+    # draw the shadow rectangle
+    pygame.draw.rect(
+        surface,
+        COLORS["buttons"]["shadow"],
+        (rect.x - 6, rect.y - 6, rect.w, rect.h),
+        border_radius=10
+    )
+    pygame.draw.rect(
+        surface,
+        COLORS["buttons"]["default"],
+        rect,
+        border_radius=10
+    )  # draw the rectangle
+    # draw the text
+    if text is not None:
+        draw_text(surface, text, rect.center, COLORS["buttons"]["text"], pos_mode="center", font=FONTS["small"],
+                  shadow=True, shadow_color=COLORS["buttons"]["shadow"])
 
 
 def button(surface, pos_y, text=None, click_sound=None):
